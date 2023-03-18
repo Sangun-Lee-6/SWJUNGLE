@@ -5,7 +5,9 @@ def solution(start, end):
     div = end+1
 
     for i in range(start + 1, end + 1):  # list 의 두번째 원소부터 끝까지
-        if tree[start] < tree[i]:       # tree[start] 는 루트노드 ∴ 루트 노드보다 큰 원소값이 있다면 if 문 실행
+        if tree[start] < tree[i]:      
+        # 루트노드보다 큰 값이 나오면 그 값은 오른쪽 서브 트리의 루트노드
+            # 따라서 그 둘을 나누는 div 변수에 i 를 집어넣음
             
             div = i
             break

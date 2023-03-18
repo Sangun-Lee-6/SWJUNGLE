@@ -11,6 +11,12 @@ for i in range(N):
 def preorder(root):
     
     if root != '.':
+
+    # 만약 root 가 비어 있지 않다면 if 문 실행
+    # root 가 비어있다면 root 로 '.' 이 들어와도 아무것도 실행되지 않음
+
+    # 전위 순회는 root 노드를 먼저 방문
+    # ∴ print 뒤에 함수 2개가 연속으로 나오는 것
         
         print(root, end='')
         preorder(tree[root][0])   # left
