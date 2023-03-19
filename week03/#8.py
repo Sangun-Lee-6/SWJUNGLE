@@ -37,6 +37,8 @@ for _ in range(T):
         graph[a].append(b)
         graph[b].append(a)
     
+    # print(graph)
+    
     for i in range(1, V+1):
         if not visited_dfs[i]:
             dfs(i, 1)
