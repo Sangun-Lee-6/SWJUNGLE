@@ -14,8 +14,6 @@ for coin in coins:
     q.append([coin, 1])
     check[coin] = 1
 
-print(q)
-
 flag = True
 while q:
     val, cnt = q.popleft()
