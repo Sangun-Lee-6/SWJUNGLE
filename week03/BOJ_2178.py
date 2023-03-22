@@ -1,33 +1,33 @@
 import sys
+input = sys.stdin.readline
 from collections import deque
 
-n, m = map(int, sys.stdin.readline().split())
-
+R, C = map(int, input().split())
 
 graph = []
-for _ in range(n):
-    graph.append(list(map(int, sys.stdin.readline().rstrip()))) 
+for i in range(R):
+    row_input = list(map(int, input().rstrip()))
+    graph.append(row_input)
 
-# 상하좌우
-dx = [-1, 1, 0, 0] 
-dy = [0, 0, -1, 1]
+dr = [-1,0,1,0]
+dc = [0,-1,0,1]
 
-def bfs(x, y):
-    
-    queue = deque()
-    queue.append((x,y))
+q = deque()
+def bfs(r,c):
 
-    while queue:
-        x, y = queue.popleft()
+    q.append((r,c))
 
+    while q:
+        r,c = q.popleft()
         for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
+            nr = r + dr[i]
+            nc = c + dc[i]
 
-            if 0 <= nx < n and 0 <= ny < m and graph[nx][ny] == 1:
-                queue.append((nx, ny))
-                graph[nx][ny] = graph[x][y] + 1
-    
-    return graph[n-1][m-1]
+            if 0<= nr < R and 0<= nc < C and graph[nr][nc] ==1:
 
-print(bfs(0,0))
+                graph[nr][nc] = graph[r][c] + 1
+                q.append((nr,nc))
+
+    return graph[R-1][C-1]
+
+print(bfs(0,0))                
