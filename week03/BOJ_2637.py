@@ -2,35 +2,42 @@ import sys
 input = sys.stdin.readline
 from collections import deque
 
-n = int(input())
-m = int(input())
-connect = [[] for _ in range(n+1)]
-need = [[0]*(n+1) for _ in range(n+1)]
-indegree = [0]*(n+1)
+N = int(input())
+M = int(input())
 
-for _ in range(m):
-    a,b,c = map(int, input().split())  
-    connect[b].append((a,c))
+graph = [[] for _ in range(N+1)]
+indegree = [0]*(N+1)
+v = [[0]*(N+1) for _ in range(N+1)]
+# 부품 개수를 저장하는 리스트 v
+
+
+for _ in range(M):
+    a,b,c = map(int, input().split())
+    graph[b].append((a,c))
     indegree[a] += 1
 
 q = deque()
 
-for i in range(1, n+1):
+for i in range(N+1):
     if indegree[i] ==0:
         q.append(i)
+        v[i][i] = 1    # 기본 부품만 1 로 설정
 
 while q:
     now = q.popleft()
-    for part, num_parts in connect[now]:
-        if need[now].count(0) == n+1:
-            need[part][now] += num_parts
-        else :
-            for i in range(1, n+1):
-                need[part][i] += need[now][i] * num_parts
-        indegree[part] -= 1
-        if indegree[part] ==0:
-            q.append(part)
+    for node in graph[now]:         # node 는 (다음 부품 번호, 그걸 만드는데 필요한 개수)
+        
+        for i in range(1, N+1):
+            # 다음 부품을 만드는데 필요한 부품 계산, 현재 부품 만드는데 드는 개수에 다음 부품 만들때 필요한 부품 곱해줌
+            next_part = node[0]
+            count = node[1]
 
-for x in enumerate(need[n]):
-    if x[1] > 0:
-        print(*x)
+            v[next_part][i] += count*v[now][i]
+            
+        indegree[next_part] -= 1
+        if indegree[next_part] == 0:
+            q.append(next_part)
+
+for i in range(1, N+1):
+    if v[N][i]:  
+        print(f"{i} {v[N][i]}")
